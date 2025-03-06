@@ -1,0 +1,24 @@
+{
+	"go.buildTags": "tools,js,wasm",
+	"gopls": {
+		"ui.semanticTokens": false
+	},
+	"go-template.languages": ["go", "json", "yaml", "tmpl"],
+	"go.generateTestsFlags": ["-template=testify"],
+	"go.testEnvVars": {},
+	"go.addTags": {
+		"tags": "json,yaml,mapstructure",
+		"options": "json=omitempty,yaml=omitempty,mapstructure=omitempty",
+		"promptForTags": true,
+		"transform": "snakecase",
+		"template": ""
+	},
+	"yaml.schemas": {
+		"./config/schema.json": [
+			"**/testdata/*.yaml",
+			"**/testdata/*.yml",
+			"**/config/*.yaml"
+		]
+	},
+	"typescript.tsdk": "node_modules/typescript/lib"
+}

@@ -1,0 +1,36 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "go: build package",
+			"type": "shell",
+			"command": "go",
+			"args": ["build", "-mod=readonly", "-v", "./internal/tmpl/tools/..."],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": ["$go"],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "Build the Go package with readonly module mode"
+		},
+		{
+			"label": "vscode: log vscode variables",
+			"type": "shell",
+			"command": "echo",
+			"args": [
+				"cwd: ${cwd}",
+				"fileBasename: ${fileBasename}",
+				"fileDirname: ${fileDirname}",
+				"fileWorkspaceFolderBasename: ${fileWorkspaceFolderBasename}",
+				"file: ${file}",
+				"relativeFileDirname: ${relativeFileDirname}",
+				"relativeFile: ${relativeFile}",
+				"workspaceFolderBasename: ${workspaceFolderBasename}",
+				"workspaceFolder: ${workspaceFolder}"
+			]
+		}
+	]
+}
