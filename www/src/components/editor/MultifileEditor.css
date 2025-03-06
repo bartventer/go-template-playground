@@ -1,0 +1,117 @@
+.playground-icon {
+	margin-inline-end: 5px;
+
+	&.default_file {
+		background-image: url("../../assets/icons/default_file.svg");
+	}
+	&.file_type_json {
+		background-image: url("../../assets/icons/file_type_json.svg");
+	}
+	&.file_type_toml {
+		background-image: url("../../assets/icons/file_type_toml.svg");
+	}
+	&.file_type_yaml {
+		background-image: url("../../assets/icons/file_type_yaml.svg");
+	}
+	&.file_type_text {
+		background-image: url("../../assets/icons/file_type_text.svg");
+	}
+	&.file_type_markdown {
+		background-image: url("../../assets/icons/file_type_markdown.svg");
+	}
+}
+
+.editor-shell {
+	outline: 1px solid var(--chakra-colors-chakra-border-color);
+
+	/* Light theme */
+	&[data-vscode-theme="vs"],
+	[data-vscode-theme="vs"] & {
+		--vscode-tablist-background: #f3f3f375;
+		--vscode-tab-activeBackground: #ffffff;
+		--vscode-tab-unfocusedActiveBackground: #ffffff;
+		--vscode-tab-inactiveBackground: #f3f3f3;
+		--vscode-tab-unfocusedInactiveBackground: #f3f3f3;
+		--vscode-tab-activeForeground: #000000;
+		--vscode-tab-inactiveForeground: rgba(0, 0, 0, 0.5);
+		--vscode-tab-unfocusedActiveForeground: rgba(0, 0, 0, 0.5);
+		--vscode-tab-unfocusedInactiveForeground: rgba(0, 0, 0, 0.25);
+		--vscode-tab-selectedBackground: #e5e5e5;
+		--vscode-tab-selectedForeground: rgba(0, 0, 0, 0.63);
+	}
+
+	/* High Contrast Light Theme */
+	&[data-vscode-theme="hc-light"],
+	[data-vscode-theme="hc-light"] & {
+		--vscode-tablist-background: #f3f3f37a;
+		--vscode-tab-activeBackground: #ffffff;
+		--vscode-tab-unfocusedActiveBackground: #ffffff;
+		--vscode-tab-activeForeground: #292929;
+		--vscode-tab-inactiveBackground: #f3f3f3f1;
+		--vscode-tab-inactiveForeground: #2929298f;
+		--vscode-tab-unfocusedActiveForeground: #292929;
+		--vscode-tab-unfocusedInactiveForeground: #292929;
+		--vscode-tab-activeBorderTop: #b5200d;
+		--vscode-tab-unfocusedActiveBorderTop: #b5200d;
+		--vscode-tab-selectedBorderTop: #b5200d;
+		--vscode-tab-selectedBackground: #ffffff;
+		--vscode-tab-selectedForeground: #292929;
+		--vscode-tab-unfocusedHoverBorder: #0f4a85;
+	}
+
+	/* Dark theme */
+	&[data-vscode-theme="vs-dark"],
+	[data-vscode-theme="vs-dark"] & {
+		--vscode-tablist-background: rgb(37, 37, 38);
+		--vscode-tab-activeBackground: #1e1e1e;
+		--vscode-tab-unfocusedActiveBackground: #1e1e1e;
+		--vscode-tab-inactiveBackground: #2d2d2d;
+		--vscode-tab-unfocusedInactiveBackground: #2d2d2d;
+		--vscode-tab-activeForeground: #ffffff;
+		--vscode-tab-inactiveForeground: rgba(255, 255, 255, 0.5);
+		--vscode-tab-unfocusedActiveForeground: rgba(255, 255, 255, 0.5);
+		--vscode-tab-unfocusedInactiveForeground: rgba(255, 255, 255, 0.25);
+		--vscode-tab-border: rgb(37, 37, 38);
+		--vscode-tab-selectedBackground: #222222;
+		--vscode-tab-selectedForeground: rgba(255, 255, 255, 0.63);
+	}
+
+	/* High Contrast Dark Theme */
+	&[data-vscode-theme="hc-black"],
+	[data-vscode-theme="hc-black"] & {
+		--vscode-tablist-background: rgb(37, 37, 38);
+		--vscode-tab-activeBackground: var(--vscode-editor-background);
+		--vscode-tab-unfocusedActiveBackground: #000000;
+		--vscode-tab-inactiveBackground: var(--chakra-colors-whiteAlpha-50);
+		--vscode-tab-activeForeground: #ffffff;
+		--vscode-tab-inactiveForeground: #ffffff9c;
+		--vscode-tab-unfocusedActiveForeground: #ffffff;
+		--vscode-tab-unfocusedInactiveForeground: #ffffff;
+		--vscode-tab-border: rgb(37, 37, 38);
+		--vscode-tab-selectedBackground: #000000;
+		--vscode-tab-selectedForeground: #ffffff;
+	}
+
+	.editor-toolbar-container {
+		background-color: var(--vscode-tablist-background);
+	}
+
+	.monaco-editor {
+		outline-offset: 0;
+		outline-style: none;
+		outline-width: 0px;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+	}
+
+	/* monaco-editor wrapper */
+	.playground-editor {
+		position: relative;
+		> * {
+			all: reset;
+		}
+	}
+}

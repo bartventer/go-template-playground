@@ -1,0 +1,31 @@
+{
+	"compilerOptions": {
+		"target": "ES2022",
+		"useDefineForClassFields": true,
+		"lib": ["ES2022", "DOM", "DOM.Iterable"],
+		"module": "ESNext",
+		"skipLibCheck": true,
+		/* Bundler mode */
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"isolatedModules": true,
+		"moduleDetection": "force",
+		"noEmit": true,
+		"jsx": "react-jsx",
+		/* Linting */
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		/* Source maps */
+		"baseUrl": "./",
+		"sourceMap": true,
+		"typeRoots": ["src/types", "./node_modules/@types"],
+		"paths": {
+			"@*": ["src/*"],
+			"package.json": ["package.json"]
+		}
+	},
+	"include": ["src", "src/types"],
+	"exclude": ["src/workers/*", "src/services/wasm/*"]
+}

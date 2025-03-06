@@ -1,0 +1,368 @@
+.markdown-viewer-container {
+	all: revert;
+}
+
+.markdown-body {
+	blockquote,
+	dd,
+	details,
+	dl,
+	dt,
+	figure,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	hr,
+	label,
+	ol,
+	pre,
+	p,
+	summary,
+	table,
+	ul {
+		margin: calc(1em + 1ex) 0;
+	}
+
+	ol,
+	ul {
+		list-style-type: none;
+		padding-left: 0;
+	}
+
+	blockquote {
+		color: var(--chakra-colors-gray-800);
+		padding-left: calc(1 * (1em + 1ex));
+		position: relative;
+	}
+
+	blockquote::before {
+		background-color: var(--chakra-colors-gray-200);
+		border-radius: 3px;
+		content: "";
+		display: block;
+		height: 100%;
+		left: 0;
+		position: absolute;
+		width: calc(0.25 * (1em + 1ex));
+	}
+
+	blockquote pre,
+	li pre {
+		border-radius: 3px;
+		margin-inline: 0;
+	}
+
+	code {
+		background-color: rgb(0 0 0 / 4%);
+		border-radius: 3px;
+		padding: 0.2em 0.4em;
+	}
+
+	dd {
+		margin-top: 0;
+		padding: 0 calc(1em + 1ex);
+	}
+
+	dt {
+		font-style: italic;
+		margin-bottom: 0;
+	}
+
+	dt + dt {
+		margin-top: 0;
+	}
+
+	hr {
+		background-color: rgb(0 0 0 / 4%);
+		border: 0;
+		border-radius: 3px;
+		height: calc(0.25 * (1em + 1ex));
+	}
+
+	h1,
+	h2 {
+		font-size: 2.5em;
+		margin-block: calc(0.4em + 0.7ex);
+		padding-bottom: calc(0.2em + 0.2ex);
+	}
+
+	h2 {
+		font-size: 2em;
+		margin-block: calc(0.5 * (1em + 1.25ex));
+		padding-bottom: calc(0.25 * (1em + 1ex));
+	}
+
+	h1,
+	h2 {
+		border-bottom-width: 1px;
+		border-bottom-style: solid;
+	}
+
+	h3 {
+		font-size: 1.5em;
+		margin-block: calc(0.6667 * (1em + 1.1667ex));
+	}
+
+	h4,
+	p {
+		font-size: 1.1em;
+		margin-block: calc(0.8 * (1em + 1.1ex));
+	}
+
+	img[align="left"] {
+		padding-right: calc(1em + 1ex);
+	}
+
+	img[align="right"] {
+		padding-left: calc(1em + 1ex);
+	}
+
+	img {
+		background-color: transparent;
+	}
+
+	kbd {
+		background-color: var(--chakra-colors-gray-200);
+		border-radius: 3px;
+		border: 1px solid;
+		box-shadow: inset 0 -1px 0 var(--chakra-colors-gray-400);
+		color: var(--chakra-colors-gray-700);
+		padding: 0.2em 0.4em;
+		vertical-align: middle;
+	}
+
+	li {
+		margin-block: calc(0.25 * (1em + 1ex));
+		margin-left: calc(1 * (1em + 1ex));
+		word-wrap: break-all;
+	}
+
+	ol {
+		list-style-type: decimal;
+	}
+
+	ol ol {
+		list-style-type: lower-roman;
+	}
+
+	ol ol,
+	ol ul,
+	ul ol,
+	ul ul {
+		margin-block: 0;
+	}
+
+	ol ol ol {
+		list-style-type: lower-alpha;
+	}
+
+	pre {
+		background-color: rgb(0 0 0 / 4%);
+		font-size: inherit;
+		margin-inline: calc(-1 * (1em + 1ex));
+		padding: calc(1em + 1ex);
+		overflow: auto;
+		word-wrap: normal;
+	}
+
+	pre code {
+		background-color: transparent;
+		overflow: visible;
+		padding: 0;
+		white-space: pre;
+		word-break: normal;
+		word-wrap: normal;
+	}
+
+	summary {
+		cursor: pointer;
+	}
+
+	table {
+		border-collapse: collapse;
+		border-spacing: 0;
+		display: block;
+		font-variant-numeric: lining-nums;
+		overflow: auto;
+		width: 100%;
+	}
+
+	td,
+	th {
+		border: 1px solid;
+		padding: 0.4em 0.8em;
+	}
+
+	tr {
+		background-color: var(--chakra-colors-gray-100);
+		border-top: 1px solid var(--chakra-colors-gray-300);
+	}
+
+	tr:nth-child(2n) {
+		background-color: var(--chakra-colors-gray-100);
+	}
+
+	ul {
+		list-style-type: circle;
+	}
+
+	ul ul {
+		list-style-type: disc;
+	}
+
+	ul ul ul {
+		list-style-type: square;
+	}
+
+	@media (width > 48em) {
+		blockquote,
+		ol,
+		ul {
+			margin-left: calc(-1 * (1em + 1ex));
+		}
+
+		blockquote blockquote,
+		blockquote ol,
+		blockquote ul,
+		ol blockquote,
+		ol ol,
+		ol ul,
+		ul blockquote,
+		ul ol,
+		ul ul {
+			margin-left: 0;
+		}
+
+		pre {
+			border-radius: 3px;
+		}
+	}
+
+	@media (prefers-color-scheme: dark) {
+		blockquote::before {
+			background-color: rgb(255 255 255 / 12%);
+		}
+
+		blockquote {
+			color: var(--chakra-colors-gray-400);
+		}
+
+		code,
+		hr,
+		kbd,
+		pre {
+			background-color: rgb(255 255 255 / 12%);
+		}
+
+		kbd {
+			border-color: var(--chakra-colors-gray-800);
+			box-shadow: inset 0 -1px 0 #000;
+			color: var(--chakra-colors-gray-200);
+		}
+
+		td,
+		th {
+			border-color: var(--chakra-colors-gray-600);
+		}
+
+		tr:nth-child(2n) {
+			background-color: var(--chakra-colors-gray-800);
+		}
+
+		tr {
+			background-color: var(--chakra-colors-gray-900);
+			border-top-color: var(--chakra-colors-gray-600);
+		}
+	}
+
+	overflow-y: auto;
+	scroll-behavior: smooth;
+
+	scrollbar-color: var(--vscode-scrollbarSlider-background)
+		var(--vscode-editor-background);
+
+	img,
+	video {
+		max-width: 100%;
+		max-height: 100%;
+	}
+
+	a,
+	a code {
+		color: var(--vscode-textLink-foreground);
+	}
+
+	p > a {
+		text-decoration: var(--text-link-decoration);
+	}
+
+	a:hover {
+		color: var(--vscode-textLink-activeForeground);
+	}
+
+	a:focus,
+	input:focus,
+	select:focus,
+	textarea:focus {
+		outline: 1px solid -webkit-focus-ring-color;
+		outline-offset: -1px;
+	}
+
+	code {
+		font-family: var(--monaco-monospace-font);
+		color: var(--vscode-textPreformat-foreground);
+		background-color: var(--vscode-textPreformat-background);
+		padding: 1px 3px;
+		border-radius: 4px;
+	}
+
+	pre code {
+		padding: 0;
+	}
+
+	blockquote {
+		background: var(--vscode-textBlockQuote-background);
+		border-color: var(--vscode-textBlockQuote-border);
+	}
+
+	kbd {
+		background-color: var(--vscode-keybindingLabel-background);
+		color: var(--vscode-keybindingLabel-foreground);
+		border-style: solid;
+		border-width: 1px;
+		border-radius: 3px;
+		border-color: var(--vscode-keybindingLabel-border);
+		border-bottom-color: var(--vscode-keybindingLabel-bottomBorder);
+		box-shadow: inset 0 -1px 0 var(--vscode-widget-shadow);
+		vertical-align: middle;
+		padding: 1px 3px;
+	}
+
+	::-webkit-scrollbar {
+		width: 14px;
+		height: 10px;
+	}
+
+	::-webkit-scrollbar-corner {
+		background-color: var(--vscode-editor-background);
+	}
+
+	::-webkit-scrollbar-thumb {
+		background-color: var(--vscode-scrollbarSlider-background);
+	}
+	::-webkit-scrollbar-thumb:hover {
+		background-color: var(--vscode-scrollbarSlider-hoverBackground);
+	}
+	::-webkit-scrollbar-thumb:active {
+		background-color: var(--vscode-scrollbarSlider-activeBackground);
+	}
+	::highlight(find-highlight) {
+		background-color: var(--vscode-editor-findMatchHighlightBackground);
+	}
+	::highlight(current-find-highlight) {
+		background-color: var(--vscode-editor-findMatchBackground);
+	}
+}
