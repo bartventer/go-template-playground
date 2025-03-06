@@ -1,0 +1,12 @@
+{
+	"name": "go-template-playground",
+	"version": "0.1.0",
+	"repository": "git@github.com:bartventer/go-template-playground.git",
+	"author": "Bart Venter <bartventer@outlook.com>",
+	"license": "Apache-2.0",
+	"private": true,
+	"workspaces": [
+		"www"
+	],
+	"packageManager": "yarn@1.22.22"
+}
