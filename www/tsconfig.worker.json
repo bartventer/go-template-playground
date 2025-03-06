@@ -1,0 +1,17 @@
+{
+	"extends": "./tsconfig.app.json",
+	"compilerOptions": {
+		"lib": ["ES2022", "WebWorker"]
+	},
+	"exclude": ["src"],
+	"files": [
+		"src/lib/go/wasm_exec.d.ts",
+		"src/types/globals.d.ts",
+		"src/types/vite-env.d.ts",
+		"src/workers/playground.worker.ts",
+		"src/workers/autosave.worker.ts",
+		"src/services/wasm/index.ts",
+		"src/services/storage/index.ts",
+		"src/services/markdown/index.ts"
+	]
+}

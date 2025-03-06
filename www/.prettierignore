@@ -1,0 +1,27 @@
+# Ignore build artifacts
+build
+coverage
+dist
+dev-dist
+
+# Ignore dependencies
+node_modules
+
+# Ignore public assets
+public
+
+# Ignore generated files
+src/generated
+
+# Ignore IDE and editor configuration files
+.vscode
+.idea
+*.log
+
+# Ignore minified files and source maps
+*.min.js
+*.min.css
+*.map
+
+# Ignore static assets
+src/assets
