@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+version: 2
+
+builds:
+  - skip: true
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+
+release:
+  mode: keep-existing
+  draft: false
+  name_template: "{{ .Tag }}"
+  footer: |
+    **Full Changelog**: https://github.com/bartventer/go-template-playground/compare/{{ .PreviousTag }}...{{ if .IsNightly }}nightly{{ else }}{{ .Tag }}{{ end }}
+
+    {{ if not .IsNightly }}
+    ## Contributing
+
+    This release is made possible by the contributions of our amazing community!
+
+    Want to help improve this project?
+    You can [contribute with code](https://github.com/bartventer/go-template-playground/CONTRIBUTING.md).
+
+    ---
+    <p align="center"><img src="https://i.imgur.com/SvFgb1L.png" alt="Go Template Playground Logo" style="width:70%; height:auto;"></p>
+    <p align="center"><sub><small>Photo by <a href="https://github.com/ashleymcnamara">Ashley McNamara</a>, via <a href="https://github.com/ashleymcnamara/gophers">ashleymcnamara/gophers</a> (CC BY-NC-SA 4.0)</small></sub></p>
+    {{ end }}
