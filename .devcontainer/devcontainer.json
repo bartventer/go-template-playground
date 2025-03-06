@@ -1,0 +1,15 @@
+{
+	"name": "Go Template Playground Development Container",
+	"image": "ghcr.io/bartventer/go-template-playground/devcontainer:latest",
+	"mounts": [
+		"source=/tmp/.X11-unix,target=/tmp/.X11-unix,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.vscode-server,target=/home/vscode/.vscode-server-insiders/extensions,type=bind,consistency=cached",
+		"source=${localEnv:HOME}/.config/gh,target=/home/vscode/.config/gh,type=bind,consistency=ro"
+	],
+	"remoteEnv": {
+		"GOBIN": "${containerEnv:HOME:/home/vscode}/go/bin",
+		"PATH": "${containerEnv:PATH}:${containerEnv:HOME:/home/vscode}/go/bin",
+		"WORKSPACE": "${containerWorkspaceFolder}"
+	},
+	"forwardPorts": [8080, 3000, 5173]
+}

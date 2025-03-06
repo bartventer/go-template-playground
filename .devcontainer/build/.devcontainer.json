@@ -1,0 +1,19 @@
+{
+	"name": "GoTemplatePlayground Development Container",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": ["github.vscode-github-actions"]
+		}
+	},
+	"features": {
+		"ghcr.io/bartventer/arch-devcontainer-features/go": {
+			"installCobraCli": true,
+			"installGoReleaser": true,
+			"golangciLintVersion": "v1.64.6"
+		},
+		"ghcr.io/bartventer/arch-devcontainer-features/docker-in-docker": {}
+	}
+}
