@@ -7,68 +7,53 @@ on:
     branches: [master]
     types: [completed]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
 jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
-    permissions:
-      contents: write
-    concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-go@v5
+      - name: Set up Go
+        uses: actions/setup-go@v5
         with:
           go-version-file: ${{ github.workspace }}/go.mod
           cache-dependency-path: ${{ github.workspace }}/go.sum
 
-      - uses: actions/setup-node@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
         with:
           node-version-file: package.json
           cache: "yarn"
           cache-dependency-path: yarn.lock
 
-      - name: "Install"
+      - name: Install dependencies
         run: make install
 
-      - name: "Build"
-        run: |
-          make build
-          echo
-          ls -ls ${{github.workspace}}/www/dist
+      - name: Build
+        run: make build
 
-      - name: Prepare tag
-        id: prepare_tag
-        env:
-          GH_PAGES_TAG_PREFIX: "deploy-"
-        if: startsWith(github.ref, 'refs/tags/')
-        shell: bash
-        run: |
-          set -e
-          # TAG_NAME=""
-          TAG_NAME=$(echo "${{ github.ref }}" | sed -e 's/refs\/tags\///')
-          if [[ -z "${TAG_NAME}" ]]; then
-            echo "No tag found"
-            exit 1
-          fi
-          _DEPLOY_TAG_NAME="${GH_PAGES_TAG_PREFIX}${TAG_NAME}"
-          echo "DEPLOY_TAG_NAME=${_DEPLOY_TAG_NAME}" >> "${GITHUB_OUTPUT}"
-          echo
-          echo "Prepared tag: ${_DEPLOY_TAG_NAME}"
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
-      - name: "Deploy to GitHub Pages"
-        if: success() && steps.prepare_tag.outputs.DEPLOY_TAG_NAME != ''
-        uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ${{github.workspace}}/www/dist
-          commit_message: "Deploy to GitHub Pages"
-          user_name: "github-actions[bot]"
-          user_email: "github-actions[bot]@users.noreply.github.com"
-          tag_name: ${{ steps.prepare_tag.outputs.DEPLOY_TAG_NAME }}
-          tag_message: "Deployment ${{ github.ref_name }}"
+          path: "./www/dist"
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

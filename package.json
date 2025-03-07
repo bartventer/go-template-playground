@@ -8,5 +8,8 @@
 	"workspaces": [
 		"www"
 	],
-	"packageManager": "yarn@1.22.22"
+	"packageManager": "yarn@1.22.22",
+	"engines": {
+		"node": "23.9.0"
+	}
 }
