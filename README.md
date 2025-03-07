@@ -14,7 +14,7 @@ An interactive environment to create and test Go templates. The playground runs 
   <img src="docs/go-template-playground-demo.gif" alt="Go Template Playground Demo" />
 </p>
 <p align="center">
-  <a href="https://go-template-playground.bartventer.dev">Try it out</a>
+  <a href="https://bartventer.github.io/go-template-playground/">Try it out</a>
 </p>
 
 ## Features
