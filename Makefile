@@ -83,7 +83,6 @@ endef
 
 .PHONY: install/wasm
 install/wasm: ## Install go dependencies
-	go mod tidy -v
 	go mod download -x
 	go mod verify
 
