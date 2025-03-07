@@ -23,6 +23,8 @@ jobs:
       group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-go@v5
         with:
@@ -43,6 +45,8 @@ jobs:
 
       - name: Prepare tag
         id: prepare_tag
+        env:
+          GH_PAGES_TAG_PREFIX: "deploy-"
         shell: bash
         run: |
           set -e
@@ -56,18 +60,20 @@ jobs:
             echo "No tag found"
             exit 1
           fi
-          echo "DEPLOY_TAG_NAME=deploy-${TAG_NAME}" >> "${GITHUB_OUTPUT}"
+          _DEPLOY_TAG_NAME="${GH_PAGES_TAG_PREFIX}${TAG_NAME}"
+          echo "DEPLOY_TAG_NAME=${_DEPLOY_TAG_NAME}" >> "${GITHUB_OUTPUT}"
+          echo
+          echo "Prepared tag: ${_DEPLOY_TAG_NAME}"
 
       - name: "Deploy to GitHub Pages"
         if: success() && steps.prepare_tag.outputs.DEPLOY_TAG_NAME != ''
         uses: peaceiris/actions-gh-pages@4f9cc6602d3f66b9c108549d475ec49e8ef4d45e # v4.0.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ${{github.workspace}}/www/dist
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
           publish_branch: gh-pages
+          publish_dir: ${{github.workspace}}/www/dist
           commit_message: "Deploy to GitHub Pages"
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
           tag_name: ${{ steps.prepare_tag.outputs.DEPLOY_TAG_NAME }}
           tag_message: "Deployment ${{ github.ref_name }}"
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
