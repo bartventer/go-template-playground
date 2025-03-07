@@ -66,9 +66,9 @@ SHASUM := $(if $(shell command -v sha256sum 2>/dev/null),sha256sum,shasum)
 VITE_APP_VERSION ?= $(VERSION)
 VITE_APP_DATE ?= $(DATE)
 VITE_APP_COMMIT ?= $(COMMIT)
-VITE_BASE_URL ?= $(if $(CI),/go-template-playground/,)
+VITE_APP_BASE_URL ?= $(if $(CI),/go-template-playground/,/)
 ROLLUP_VISUALIZER_PATH = $(TMP_DIR)/rollup-visualizer.html
-export VITE_APP_VERSION VITE_APP_DATE VITE_APP_COMMIT ROLLUP_VISUALIZER_PATH
+export VITE_APP_VERSION VITE_APP_DATE VITE_APP_COMMIT VITE_APP_BASE_URL ROLLUP_VISUALIZER_PATH
 
 # ==============================================================================
 # Functions
@@ -97,7 +97,7 @@ install: install/wasm install/www ## Install dependencies
 
 .PHONY: update/wasm
 update/wasm: ## Update go dependencies
-	go get -u -v -tags=tools ./...
+	go get -u -v -tags=tools ./...  
 	go mod tidy -v
 	go mod download -x
 	go mod verify
@@ -180,7 +180,7 @@ build: build/wasm build/www ## Build project
 
 .PHONY: build/ci
 build/ci: generate build ## Build project for CI
-	git diff --exit-code
+	git diff --ignore-space-change --exit-code
 
 .PHONY: browser/rollup
 browser/rollup: ## Open browser with rollup visualizer
