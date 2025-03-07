@@ -1,5 +1,6 @@
 # Based on https://gist.github.com/maratori/47a4d00457a92aa426dbd48a18776322
 run:
+  go: "1.24"
   # Timeout for analysis, e.g. 30s, 5m.
   # Default: 1m
   timeout: 3m
