@@ -11,7 +11,7 @@
 An interactive environment to create and test Go templates. The playground runs entirely in the browser without any server-side processing. It uses WebAssembly to execute Go code in the browser.
 
 <p align="center">
-  <img src="https://i.imgur.com/Y5IKz3H.gif" alt="Go Template Playground Demo" />
+  <img src="docs/go-template-playground-demo.gif" alt="Go Template Playground Demo" />
 </p>
 <p align="center">
   <a href="https://go-template-playground.bartventer.dev">Try it out</a>
