@@ -65,6 +65,7 @@ SHASUM := $(if $(shell command -v sha256sum 2>/dev/null),sha256sum,shasum)
 VITE_APP_VERSION ?= $(VERSION)
 VITE_APP_DATE ?= $(DATE)
 VITE_APP_COMMIT ?= $(COMMIT)
+VITE_BASE_URL ?= $(if $(CI),/go-template-playground/,)
 ROLLUP_VISUALIZER_PATH = $(TMP_DIR)/rollup-visualizer.html
 export VITE_APP_VERSION VITE_APP_DATE VITE_APP_COMMIT ROLLUP_VISUALIZER_PATH
 
@@ -162,7 +163,7 @@ browser/cover: ## Open browser with go code coverage
 
 .PHONY: build/wasm
 build/wasm: PLAYGROUND_BINARY := $(TMP_DIR)/$(PLAYGROUND_BINARY)
-build/wasm: ## Build WebAssembly code
+build/wasm: generate/wasm ## Build WebAssembly code
 	mkdir -pv $(dir $(WWW_DIR)/src/lib/go) $(dir $(PLAYGROUND_WASMGZ_PATH))
 	$(call build_wasm,$(PLAYGROUND_BINARY),$(CMD_DIR)/playground,$(PLAYGROUND_WASMGZ_PATH))
 	cp -f $(WASM_EXEC_SRC_PATH) $(WWW_DIR)/src/lib/go
@@ -170,11 +171,15 @@ build/wasm: ## Build WebAssembly code
 	@du -h $(WWW_DIR)/src/lib/go $(PLAYGROUND_BINARY) $(PLAYGROUND_WASMGZ_PATH) | sort -h
 
 .PHONY: build/www
-build/www: ## Build gui code
+build/www: generate/www ## Build gui code
 	yarn workspace $(YARN_WORKSPACE) build
 
 .PHONY: build
 build: build/wasm build/www ## Build project
+
+.PHONY: build/ci
+build/ci: build ## Build project for CI
+	git diff --exit-code
 
 .PHONY: browser/rollup
 browser/rollup: ## Open browser with rollup visualizer

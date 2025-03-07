@@ -44,7 +44,7 @@ jobs:
         run: make install
 
       - name: Build
-        run: make build
+        run: make build/ci
 
       - name: Setup Pages
         uses: actions/configure-pages@v4

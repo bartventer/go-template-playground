@@ -14,6 +14,7 @@ export default defineConfig((props) => {
 	const { mode } = props;
 	const env = loadEnv(mode, process.cwd());
 	return {
+		base: env.VITE_BASE_URL,
 		optimizeDeps: {
 			needsInterop: [
 				"monaco-editor/esm/vs/editor/standalone/browser/inspectTokens/inspectTokens.js",
