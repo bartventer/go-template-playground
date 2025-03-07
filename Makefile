@@ -15,6 +15,7 @@ GITHUB_WORKSPACE ?=
 # Workspace and Directory Paths
 # ==============================================================================
 WORKSPACE = $(or $(GITHUB_WORKSPACE),$(shell git rev-parse --show-toplevel))
+export WORKSPACE
 TMP_DIR = $(WORKSPACE)/tmp
 CMD_DIR = $(WORKSPACE)/cmd
 
@@ -163,7 +164,7 @@ browser/cover: ## Open browser with go code coverage
 
 .PHONY: build/wasm
 build/wasm: PLAYGROUND_BINARY := $(TMP_DIR)/$(PLAYGROUND_BINARY)
-build/wasm: generate/wasm ## Build WebAssembly code
+build/wasm: ## Build WebAssembly code
 	mkdir -pv $(dir $(WWW_DIR)/src/lib/go) $(dir $(PLAYGROUND_WASMGZ_PATH))
 	$(call build_wasm,$(PLAYGROUND_BINARY),$(CMD_DIR)/playground,$(PLAYGROUND_WASMGZ_PATH))
 	cp -f $(WASM_EXEC_SRC_PATH) $(WWW_DIR)/src/lib/go
@@ -171,14 +172,14 @@ build/wasm: generate/wasm ## Build WebAssembly code
 	@du -h $(WWW_DIR)/src/lib/go $(PLAYGROUND_BINARY) $(PLAYGROUND_WASMGZ_PATH) | sort -h
 
 .PHONY: build/www
-build/www: generate/www ## Build gui code
+build/www: ## Build gui code
 	yarn workspace $(YARN_WORKSPACE) build
 
 .PHONY: build
 build: build/wasm build/www ## Build project
 
 .PHONY: build/ci
-build/ci: build ## Build project for CI
+build/ci: generate build ## Build project for CI
 	git diff --exit-code
 
 .PHONY: browser/rollup
