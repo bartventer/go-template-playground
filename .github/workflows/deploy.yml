@@ -36,7 +36,10 @@ jobs:
         run: make install
 
       - name: "Build"
-        run: make build
+        run: |
+          make build
+          echo
+          ls -ls ${{github.workspace}}/www/dist
 
       - name: Prepare tag
         id: prepare_tag
