@@ -24,13 +24,12 @@ YARN_WORKSPACE ?= www
 WWW_DIR = $(WORKSPACE)/www
 PUBLIC_DIR = $(WWW_DIR)/public
 WWW_WASM_DIR = $(PUBLIC_DIR)/wasm
+WWW_LIB_DIR = $(WWW_DIR)/src/lib
 
 # WebAssembly
 WASM_EXEC_SRC_PATH = $(shell go env GOROOT)/lib/wasm/wasm_exec.js
-WASM_EXEC_MIN_PATH = $(WWW_WASM_DIR)/wasm_exec.min.js
 PLAYGROUND_WASMGZ_PATH = $(WWW_WASM_DIR)/playground.wasm.gz
-
-# to look for wasm_exec.js run: $ find /usr/local/go -name wasm_exec.js
+PLAYGROUND_WASM_EXEC_PATH = $(WWW_LIB_DIR)/go/wasm_exec.js
 
 # ==============================================================================
 # Build Configuration
@@ -165,11 +164,11 @@ browser/cover: ## Open browser with go code coverage
 .PHONY: build/wasm
 build/wasm: PLAYGROUND_BINARY := $(TMP_DIR)/$(PLAYGROUND_BINARY)
 build/wasm: ## Build WebAssembly code
-	mkdir -pv $(dir $(WWW_DIR)/src/lib/go) $(dir $(PLAYGROUND_WASMGZ_PATH))
+	mkdir -pv $(dir $(PLAYGROUND_WASMGZ_PATH)) $(dir $(PLAYGROUND_WASM_EXEC_PATH))
 	$(call build_wasm,$(PLAYGROUND_BINARY),$(CMD_DIR)/playground,$(PLAYGROUND_WASMGZ_PATH))
-	cp -f $(WASM_EXEC_SRC_PATH) $(WWW_DIR)/src/lib/go
+	cp -f $(WASM_EXEC_SRC_PATH) $(PLAYGROUND_WASM_EXEC_PATH)
 	@echo "📦 WebAssembly build output:"
-	@du -h $(WWW_DIR)/src/lib/go $(PLAYGROUND_BINARY) $(PLAYGROUND_WASMGZ_PATH) | sort -h
+	du -h $(PLAYGROUND_BINARY) $(PLAYGROUND_WASMGZ_PATH) $(PLAYGROUND_WASM_EXEC_PATH) | sort -h 
 
 .PHONY: build/www
 build/www: ## Build gui code
@@ -177,10 +176,6 @@ build/www: ## Build gui code
 
 .PHONY: build
 build: build/wasm build/www ## Build project
-
-.PHONY: build/ci
-build/ci: generate build ## Build project for CI
-	git diff --ignore-space-change --exit-code
 
 .PHONY: browser/rollup
 browser/rollup: ## Open browser with rollup visualizer

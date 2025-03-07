@@ -218,11 +218,6 @@ func main() { //nolint:funlen // Simple command-line tool
 	genDirective := *genDirectiveFlag
 	outputPath := *outputFlag
 	srcPkgPath := *srcPkgPathFlag
-	workspace := os.Getenv("WORKSPACE")
-	if workspace == "" {
-		log.Fatal("WORKSPACE environment variable not set")
-	}
-	repoName := filepath.Base(workspace)
 
 	fset := token.NewFileSet()
 	pkgs, err := parser.ParseDir(fset, srcPkgPath, func(fi os.FileInfo) bool {
@@ -243,8 +238,6 @@ func main() { //nolint:funlen // Simple command-line tool
 			slog.String("goOS", runtime.GOOS),
 			slog.String("goArch", runtime.GOARCH),
 		),
-		"workspace", workspace,
-		"repoName", repoName,
 	)
 
 	// Find custom functions with directive.
@@ -334,7 +327,7 @@ func main() { //nolint:funlen // Simple command-line tool
 	}{
 		genDirective,
 		os.Getenv("GOFILE"),
-		"github.com/bartventer/" + repoName + "/" + strings.SplitAfterN(srcPkgPath, repoName+"/", 2)[1],
+		"github.com/bartventer/" + strings.SplitAfterN(srcPkgPath, "/", 3)[2],
 		data,
 		categories,
 		filepath.Base(outputPath),
