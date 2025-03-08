@@ -173,6 +173,7 @@ dist
 *.gz
 wasm_exec.js
 wasm_exec.min.js
+*.wasm
 
 # Vite
 dev-dist
