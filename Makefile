@@ -56,7 +56,7 @@ BUILDFLAGS = -v -trimpath
 # Coverage Configuration
 # ==============================================================================
 COVERPROFILE ?= coverage.out
-COVERAGE_DIR = $(TMP_DIR)/coverage
+COVERAGE_DIR ?= $(TMP_DIR)/coverage
 COVERAGE_HTML = $(COVERAGE_DIR)/coverage.html
 SHASUM := $(if $(shell command -v sha256sum 2>/dev/null),sha256sum,shasum)
 
@@ -142,6 +142,8 @@ test/wasm: PATH := $(PATH):$(shell dirname $(WASM_EXEC_SRC_PATH))
 test/wasm: ## Run tests for go code
 	@mkdir -pv $(COVERAGE_DIR)
 	go test -v --coverpkg=./... -cover -outputdir=$(COVERAGE_DIR) -coverprofile=$(COVERPROFILE) -run= ./...
+	@echo
+	du -h $(COVERAGE_DIR)/$(COVERPROFILE)
 	@echo "📊 Coverage report: $(COVERAGE_HTML)"
 ifeq ($(CI),)
 	go tool cover -html=$(COVERAGE_DIR)/$(COVERPROFILE) -o $(COVERAGE_HTML)
