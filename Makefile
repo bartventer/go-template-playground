@@ -25,10 +25,11 @@ WWW_DIR = $(WORKSPACE)/www
 PUBLIC_DIR = $(WWW_DIR)/public
 WWW_WASM_DIR = $(PUBLIC_DIR)/wasm
 WWW_LIB_DIR = $(WWW_DIR)/src/lib
+WWW_WORKERS_DIR = $(WWW_DIR)/src/workers
 
 # WebAssembly
 WASM_EXEC_SRC_PATH = $(shell go env GOROOT)/lib/wasm/wasm_exec.js
-PLAYGROUND_WASMGZ_PATH = $(WWW_WASM_DIR)/playground.wasm.gz
+PLAYGROUND_WASM_BIN_PATH = $(WWW_WORKERS_DIR)/playground.wasm
 PLAYGROUND_WASM_EXEC_PATH = $(WWW_LIB_DIR)/go/wasm_exec.js
 
 # ==============================================================================
@@ -74,8 +75,7 @@ export VITE_APP_VERSION VITE_APP_DATE VITE_APP_COMMIT VITE_APP_BASE_URL ROLLUP_V
 # ==============================================================================
 define build_wasm
 	CGO_ENABLED=0 go build $(LDFLAGS) $(BUILDFLAGS) -o $(1) $(2)
-	gzip -9 -k -f $(1)
-	mv -f $(1).gz $(3)
+	mv -f $(1) $(3)
 endef
 
 # ==============================================================================
@@ -164,11 +164,11 @@ browser/cover: ## Open browser with go code coverage
 .PHONY: build/wasm
 build/wasm: PLAYGROUND_BINARY := $(TMP_DIR)/$(PLAYGROUND_BINARY)
 build/wasm: ## Build WebAssembly code
-	mkdir -pv $(dir $(PLAYGROUND_WASMGZ_PATH)) $(dir $(PLAYGROUND_WASM_EXEC_PATH))
-	$(call build_wasm,$(PLAYGROUND_BINARY),$(CMD_DIR)/playground,$(PLAYGROUND_WASMGZ_PATH))
+	mkdir -pv $(dir $(PLAYGROUND_WASM_BIN_PATH)) $(dir $(PLAYGROUND_WASM_EXEC_PATH))
+	$(call build_wasm,$(PLAYGROUND_BINARY),$(CMD_DIR)/playground,$(PLAYGROUND_WASM_BIN_PATH))
 	cp -f $(WASM_EXEC_SRC_PATH) $(PLAYGROUND_WASM_EXEC_PATH)
 	@echo "📦 WebAssembly build output:"
-	du -h $(PLAYGROUND_BINARY) $(PLAYGROUND_WASMGZ_PATH) $(PLAYGROUND_WASM_EXEC_PATH) | sort -h 
+	du -h $(PLAYGROUND_WASM_BIN_PATH) $(PLAYGROUND_WASM_EXEC_PATH) | sort -h 
 
 .PHONY: build/www
 build/www: ## Build gui code
@@ -182,16 +182,16 @@ browser/rollup: ## Open browser with rollup visualizer
 	xdg-open $(ROLLUP_VISUALIZER_PATH)
 
 .PHONY: dev
-dev: build/wasm ## Run gui development server
+dev: build/wasm ## Run local development server
 	yarn workspace $(YARN_WORKSPACE) dev
 
 .PHONY: serve
-serve: build ## Run gui production server
+serve: ## Run local production server
 	yarn workspace $(YARN_WORKSPACE) serve
 
 .PHONY: clean
 clean: ## Clean project
-	-rm -rfv node_modules $(TMP_DIR) $(WWW_DIR)/dist $(WWW_DIR)/dev-dist $(dir $(PLAYGROUND_WASMGZ_PATH))
+	-rm -rfv node_modules $(TMP_DIR) $(WWW_DIR)/dist $(WWW_DIR)/dev-dist $(dir $(PLAYGROUND_WASM_BIN_PATH))
 	go clean -cache -testcache -modcache
 	yarn cache clean
 

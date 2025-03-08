@@ -13,13 +13,12 @@ export class GoWasmLoaderService {
 	async init(): Promise<void> {
 		const response = await fetch(this.#wasmUrl, {
 			headers: {
-				"Content-Type": "application/wasm",
-				"Content-Encoding": "gzip",
+				Accept: "application/wasm",
 			},
 		});
 		if (!response.ok) {
 			throw new Error(
-				`Network response was not ok: ${response.status} 
+				`Network response was not ok: ${response.status}
 				${response.statusText}`,
 			);
 		}

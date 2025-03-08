@@ -7,7 +7,7 @@
  */
 
 import { GoWasmLoaderService } from "../services/wasm/GoWasmLoaderService";
-import wasmUrl from "/wasm/playground.wasm.gz?url";
+import wasmUrl from "./playground.wasm?url";
 
 const loader = new GoWasmLoaderService(wasmUrl);
 
