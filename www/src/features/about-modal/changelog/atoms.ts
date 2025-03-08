@@ -12,9 +12,9 @@ function isChangelogResponse(data: unknown): data is ChangelogResponse {
 	return typeof data === "object" && data !== null && "body" in data;
 }
 
-async function fetchChangelog() {
+async function getChangelog() {
 	return fetch(
-		`/api/repos/${release.owner}/${release.repo}/releases/latest`,
+		`https://api.github.com/repos/${release.owner}/${release.repo}/releases/latest`,
 		{
 			headers: {
 				Accept: "application/vnd.github.v3+json",
@@ -23,7 +23,9 @@ async function fetchChangelog() {
 	)
 		.then((response) => {
 			if (!response.ok) {
-				throw new Error("Network response was not ok");
+				throw new Error("Network response was not ok", {
+					cause: response.status,
+				});
 			}
 			return response.json();
 		})
@@ -41,7 +43,7 @@ async function fetchChangelog() {
 		);
 }
 
-const changelogAtom: Atom<Promise<string>> = atomWithCache(fetchChangelog, {
+const changelogAtom: Atom<Promise<string>> = atomWithCache(getChangelog, {
 	shouldRemove(createdAt) {
 		return Date.now() - createdAt > CACHE_TTL_S * 1000;
 	},
