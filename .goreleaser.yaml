@@ -29,6 +29,8 @@ release:
     You can [contribute with code](https://github.com/bartventer/go-template-playground/CONTRIBUTING.md).
 
     ---
-    <p align="center"><img src="https://i.imgur.com/SvFgb1L.png" alt="Go Template Playground Logo" style="width:70%; height:auto;"></p>
+    <div display="flex" align="center" justify-content="center">
+    <img src="https://i.imgur.com/SvFgb1L.png" alt="Go Template Playground Logo" style="width:auto; height:clamp(100px, 20vw, 200px);">
+    </div>
     <p align="center"><sub><small>Photo by <a href="https://github.com/ashleymcnamara">Ashley McNamara</a>, via <a href="https://github.com/ashleymcnamara/gophers">ashleymcnamara/gophers</a> (CC BY-NC-SA 4.0)</small></sub></p>
     {{ end }}
