@@ -34,8 +34,7 @@ An interactive environment to create and test Go templates. The playground runs 
 
 ## Credits
 
-- This project was inspired by the [Go Playground](https://play.golang.org) and the [Better Go Playground](https://goplay.tools/).
-- The Go gopher was designed by [Renee French](https://reneefrench.blogspot.com/) and is licensed under the [Creative Commons 3.0 Attributions license](https://creativecommons.org/licenses/by/3.0/).
+The Go gopher was designed by [Renee French](https://reneefrench.blogspot.com/) and is licensed under the [Creative Commons 3.0 Attributions license](https://creativecommons.org/licenses/by/3.0/).
 
 ## Contributing
 
