@@ -195,10 +195,6 @@ clean: ## Clean project
 	go clean -cache -testcache -modcache
 	yarn cache clean
 
-# ==============================================================================
-# Colors
-# ==============================================================================
-
 ## Help:
 .PHONY: help
 help: GREEN  := $(shell tput -Txterm setaf 2)
