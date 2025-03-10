@@ -4,8 +4,7 @@
 [![Release](https://img.shields.io/github/release/bartventer/go-template-playground.svg)](https://github.com/bartventer/go-template-playground/releases/latest)
 [![Go Report Card](https://goreportcard.com/badge/github.com/bartventer/go-template-playground)](https://goreportcard.com/report/github.com/bartventer/go-template-playground)
 [![codecov](https://codecov.io/github/bartventer/go-template-playground/graph/badge.svg?token=qo69e1oQoj)](https://codecov.io/github/bartventer/go-template-playground)
-[![Tests](https://github.com/bartventer/go-template-playground/actions/workflows/default.yml/badge.svg)](https://github.com/bartventer/go-template-playground/actions/workflows/default.yml)
-[![Deplopyment](https://github.com/bartventer/go-template-playground/actions/workflows/deploy.yml/badge.svg)](https://github.com/bartventer/go-template-playground/actions/workflows/deploy.yml)
+[![Build](https://github.com/bartventer/go-template-playground/actions/workflows/default.yml/badge.svg)](https://github.com/bartventer/go-template-playground/actions/workflows/default.yml)
 ![GitHub issues](https://img.shields.io/github/issues/bartventer/go-template-playground)
 [![License](https://img.shields.io/github/license/bartventer/go-template-playground.svg)](LICENSE)
 
