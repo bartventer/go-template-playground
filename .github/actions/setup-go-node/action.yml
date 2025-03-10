@@ -1,0 +1,45 @@
+name: "Setup Go and Node.js environment"
+description: "Sets up a Go and Node.js environment"
+branding:
+  icon: "settings"
+  color: "blue"
+inputs:
+  go-version-file:
+    description: "Path to the go.mod file"
+    default: "go.mod"
+  node-version-file:
+    description: "File containing the version Spec of the version to use. Examples: package.json, .nvmrc, .node-version, .tool-versions."
+    default: "package.json"
+  go-cache-dependency-path:
+    description: "The path to the Go dependency cache"
+    default: "go.sum"
+  node-cache-dependency-path:
+    description: "Used to specify the path to a dependency file: package-lock.json, yarn.lock, etc. Supports wildcards or a list of file names for caching multiple dependencies."
+    default: "yarn.lock"
+  node-cache:
+    description: "Used to specify a package manager for caching in the default directory. Supported values: npm, yarn, pnpm."
+    default: "yarn"
+  skip-go:
+    description: "Skip setting up Go"
+    required: false
+    default: "false"
+  skip-node:
+    description: "Skip setting up Node.js"
+    required: false
+    default: "false"
+runs:
+  using: "composite"
+  steps:
+    - name: "Set up Go"
+      if: ${{ !inputs.skip-go }}
+      uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5.3
+      with:
+        go-version-file: ${{ inputs.go-version-file }}
+        cache-dependency-path: ${{ inputs.go-cache-dependency-path }}
+    - name: "Set up Node.js"
+      if: ${{ !inputs.skip-node }}
+      uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
+      with:
+        node-version-file: ${{ inputs.node-version-file }}
+        cache-dependency-path: ${{ inputs.node-cache-dependency-path }}
+        cache: ${{ inputs.node-cache }}
