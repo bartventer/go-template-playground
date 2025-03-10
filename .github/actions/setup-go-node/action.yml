@@ -31,13 +31,13 @@ runs:
   using: "composite"
   steps:
     - name: "Set up Go"
-      if: ${{ !inputs.skip-go }}
+      if: ${{ inputs.skip-go != 'true' }}
       uses: actions/setup-go@f111f3307d8850f501ac008e886eec1fd1932a34 # v5.3
       with:
         go-version-file: ${{ inputs.go-version-file }}
         cache-dependency-path: ${{ inputs.go-cache-dependency-path }}
     - name: "Set up Node.js"
-      if: ${{ !inputs.skip-node }}
+      if: ${{ inputs.skip-node != 'true' }}
       uses: actions/setup-node@1d0ff469b7ec7b3cb9d8673fde0c81c44821de2a # v4.2.0
       with:
         node-version-file: ${{ inputs.node-version-file }}
