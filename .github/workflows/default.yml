@@ -1,46 +1,110 @@
-name: Tests
-
-on:
-  push:
-    branches: [master]
-  pull_request:
+name: Build
+on: [push, pull_request]
 
 jobs:
   test:
     name: Test
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest]
-        go-version: [1.24.x]
-        include:
-          - go-version: 1.24.x
-            upload-coverage: true
-
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     env:
       COVERAGE_DIR: coverage
       COVERPROFILE: coverage.out
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-go@v5
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: ./github/actions/setup-go-node
         with:
-          go-version: ${{ matrix.go-version }}
-          cache-dependency-path: ${{ github.workspace }}/go.sum
+          skip-node: true
 
       - name: Build
-        shell: bash
         run: make build/wasm
 
-      - name: Test
-        shell: bash
+      - name: Run tests
         run: make test/wasm
 
       - name: Upload coverage reports to Codecov
-        if: ${{ matrix.upload-coverage }}
-        uses: codecov/codecov-action@v5
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
+        uses: codecov/codecov-action@0565863a31f2c772f9f0395002a31e3f06189574 # v5.4.0
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ${{ env.COVERAGE_DIR }}/${{ env.COVERPROFILE }}
           flags: unittests
           disable_search: true
+          verbose: true
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: [test]
+    if: ${{ github.event_name == 'push' && startsWith(github.ref, 'refs/tags/') }}
+    permissions:
+      contents: write
+      issues: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+      - uses: ./github/actions/setup-go-node
+        with:
+          skip-node: true
+      - uses: goreleaser/goreleaser-action@90a3faa9d0182683851fbfa97ca1a2cb983bfca3 # v6.2.1
+        with:
+          version: latest
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  preview-deploy:
+    name: Preview Deploy
+    runs-on: ubuntu-latest
+    needs: [test]
+    if: github.event_name == 'pull_request'
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages-preview"
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+      - uses: ./github/actions/setup-go-node
+      - name: Install dependencies
+        run: make install
+      - name: Build
+        run: make build
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: ./github/actions/deploy-pages
+        with:
+          preview: true
+
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    needs: [release]
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: "pages"
+      cancel-in-progress: true
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+      - uses: ./github/actions/setup-go-node
+      - name: Install dependencies
+        run: make install
+      - name: Build
+        run: make build
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: ./github/actions/deploy-pages
