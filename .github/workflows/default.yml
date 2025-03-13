@@ -90,30 +90,3 @@ jobs:
         uses: ./.github/actions/deploy-pages
         with:
           preview: true
-
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
-    needs: [release]
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    concurrency:
-      group: "pages"
-      cancel-in-progress: true
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-        with:
-          fetch-depth: 0
-      - uses: ./.github/actions/setup-go-node
-      - name: Install dependencies
-        run: make install
-      - name: Build
-        run: make build
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: ./.github/actions/deploy-pages
