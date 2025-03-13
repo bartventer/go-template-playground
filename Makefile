@@ -74,11 +74,17 @@ endef
 # Targets
 # ==============================================================================
 
-## Install:
+## Dependencies:
 .PHONY: install/wasm
 install/wasm: ## Install Go dependencies
 	go mod download -x
 	go mod verify
+
+.PHONY: install/tools
+install/tools: export GOOS =
+install/tools: export GOARCH =
+install/tools: ## Install Go tools
+	go install tool
 
 .PHONY: install/www
 install/www: ## Install GUI dependencies
@@ -87,12 +93,10 @@ install/www: ## Install GUI dependencies
 .PHONY: install
 install: install/wasm install/www ## Install dependencies
 
-## Update:
 .PHONY: update/wasm
 update/wasm: ## Update Go dependencies
-	go get -u -v -tags=tools ./...  
-	go mod tidy -v
-	go mod download -x
+	go get -u -v ./...
+	go mod tidy
 	go mod verify
 
 .PHONY: update/www
@@ -102,7 +106,7 @@ update/www: ## Update GUI dependencies
 .PHONY: update
 update: update/wasm update/www ## Update dependencies
 
-## Generate:
+## Generators:
 .PHONY: generate/wasm
 generate/wasm: export GOOS =
 generate/wasm: export GOARCH =
@@ -116,7 +120,7 @@ generate/www: ## Generate code from GUI directives
 .PHONY: generate
 generate: generate/wasm generate/www ## Generate code
 
-## Lint:
+## Code Quality:
 .PHONY: lint/wasm
 lint/wasm: ## Run Go linter
 	golangci-lint run --verbose --timeout=5m
@@ -125,7 +129,6 @@ lint/wasm: ## Run Go linter
 lint/www: ## Run GUI linter
 	$(YARN_WORKSPACE_CMD) lint
 
-## Format:
 .PHONY: fmt/wasm
 fmt/wasm: ## Format Go code
 	golangci-lint run --fix --verbose --timeout=5m
@@ -134,7 +137,7 @@ fmt/wasm: ## Format Go code
 fmt/www: ## Format GUI code
 	$(YARN_WORKSPACE_CMD) format
 
-## Test:
+## Testing:
 .PHONY: test/wasm
 test/wasm: PATH := $(PATH):$(shell dirname $(GO_WASM_EXEC_JS))
 test/wasm: ## Run tests for Go code
@@ -145,7 +148,7 @@ test/wasm: ## Run tests for Go code
 	@echo "📊 Coverage report: $(COVERAGE_HTML)"
 ifeq ($(CI),)
 	go tool cover -html=$(COVERAGE_DIR)/$(COVERPROFILE) -o $(COVERAGE_HTML)
-	@echo "🌐 Run 'make cover/browser' to open coverage report in browser"
+	@echo "🌐 Run 'make browser/cover' to open coverage report in browser"
 endif
 
 .PHONY: bench/wasm
