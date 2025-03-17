@@ -36,7 +36,7 @@
 		"@emotion/styled": "^11.13.0",
 		"@monaco-editor/react": "^4.6.0",
 		"dompurify": "^3.1.7",
-		"framer-motion": "^11.5.4",
+		"framer-motion": "^12.5.0",
 		"jotai": "^2.10.0",
 		"jotai-cache": "^0.5.0",
 		"jotai-devtools": "^0.10.1",
