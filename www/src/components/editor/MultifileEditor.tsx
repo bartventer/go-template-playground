@@ -56,8 +56,6 @@ interface CustomEditorProps {
 	show?: boolean;
 }
 
-// hoc which returns the component based on whether active file is read-only
-
 const CustomEditor: React.FC<CustomEditorProps> = memo(({ show }) => {
 	const onMount = useEditorMount();
 	const activeFile = useEditorApi().useActiveFile();
