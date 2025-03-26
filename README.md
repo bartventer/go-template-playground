@@ -1,5 +1,6 @@
 # Go Template Playground
 
+[![Mentioned in Awesome Go](https://awesome.re/mentioned-badge.svg)](https://github.com/avelino/awesome-go)
 [![Go Reference](https://pkg.go.dev/badge/github.com/bartventer/go-template-playground.svg)](https://pkg.go.dev/github.com/bartventer/go-template-playground)
 [![Release](https://img.shields.io/github/release/bartventer/go-template-playground.svg)](https://github.com/bartventer/go-template-playground/releases/latest)
 [![Go Report Card](https://goreportcard.com/badge/github.com/bartventer/go-template-playground)](https://goreportcard.com/report/github.com/bartventer/go-template-playground)
@@ -23,7 +24,7 @@ An interactive environment to create and test Go templates. The playground runs 
 - 🌑 Dark mode
 - ✨ Code autocomplete
 - 📝 Input editor for Go template language syntax
-- 📄 Data input editor supporting JSON, YAML, and TOML
+- 📄 Data input editor supporting JSON, YAML, and TOML, with automatic conversion between formats
 - 🖨️ Output editor with support for plaintext and Markdown, including a built-in Markdown viewer
 - 🔍 Syntax highlighting
 - 📐 Responsive design
